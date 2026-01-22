@@ -9,12 +9,32 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service layer for managing asteroid operations and financial valuations.
+ * <p>
+ * This service acts as the central orchestrator, coordinating between
+ * the {@link AsteroidRepository} and the {@link MiningMarketRepository}.
+ * </p>
+ *
+ * <b>Applied Clean Code Strategy:</b>
+ * <ul>
+ * <li><b>Dependency Injection (DI):</b> Uses constructor injection to receive
+ * repository abstractions, facilitating easier unit testing with mocks.</li>
+ * <li><b>Facade Pattern:</b> Provides a simplified interface to the controller
+ * while hiding the complexity of multi-repository data aggregation.</li>
+ * <li><b>KISS (Keep It Simple, Stupid/Staightforward):</b> By avoiding unnecessary interfaces for
+ * single-implementation services, we reduce boilerplate code and maintainability overhead.</li>
+ * <li><b>Error Signaling:</b> Methods throw {@link AsteroidNotFoundException}
+ * to signal missing domain objects, allowing the global handler to manage responses.</li>
+ * </ul>
+ */
 @Service
 public class AsteroidService {
 
     private final AsteroidRepository asteroidRepo;
     private final MiningMarketRepository marketRepo;
 
+    // Constructor Dependency Injection
     public AsteroidService(AsteroidRepository asteroidRepo, MiningMarketRepository miningMarketRepo) {
         this.asteroidRepo = asteroidRepo;
         this.marketRepo = miningMarketRepo;
