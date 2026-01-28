@@ -1,4 +1,4 @@
-# 🚀 Space Mining API – A Clean Code Showcase
+# 🚀 AsteroidMining API – A Clean Code Showcase
 
 Welcome to the Space Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
 It is specifically designed to showcase how to apply <B>SOLID Principles</B> and <B>Clean Code</B> strategies in a real-world-inspired scenario.
