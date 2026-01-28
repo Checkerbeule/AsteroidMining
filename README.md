@@ -16,7 +16,7 @@ Throughout the codebase, you will find extensive Javadoc explaining why certain 
  - <b>SRP</B>: Each layer (Controller, Service, Repository) has a single, clear responsibility.
  - <B>ISP & DIP</B>: Repository interfaces decouple business logic from data storage.
  - <B>LSP</B>: In-memory implementations can be swapped with real databases without breaking the system.
-#### Additional Clean Code Principals
+#### Additional Clean Code Principles
  - <B>KISS</B> Principle: We avoid "Interface-Hell" by using concrete service classes where abstractions don't yet add value.
  - <B>Immutability</B>: Using Java Records and Enums to ensure thread safety and data integrity. 
 
