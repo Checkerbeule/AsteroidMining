@@ -4,6 +4,7 @@
 .idea/shelf/
 .idea/tasks/
 .idea/httpRequests/
+workspace.xml
 
 # Ignore logs and caches
 .idea/dataSources/
