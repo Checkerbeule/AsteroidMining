@@ -3,7 +3,8 @@
 Welcome to the Space Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
 It is specifically designed to showcase how to apply **SOLID Principles** and **Clean Code** strategies in a real-world-inspired scenario.
 
-> [!NOTE] **Project Status**<br>
+> [!NOTE]
+> **Project Status**<br>
 > This is a **work-in-progress** educational project. It is intentionally not "feature-complete" as it serves as a continuous **learning playground**.
 
 ### 🎯 Purpose of this Project
