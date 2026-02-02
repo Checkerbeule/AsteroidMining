@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AsteroidMiningRunConfigLocal" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <envs>
+      <env name="SERVER_SSL_KEY_STORE_PASSWORD" value="AsteroidMining" />
+    </envs>
+    <module name="asteroid-mining-api" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.spacecorp.asteroidmining.AsteroidMiningApiApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
