@@ -84,6 +84,11 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <!-- Let the spring-boot-maven-plugin build a layered jar. -->
+                    <!-- So we can extract each layer later in the Dockerfile and profit from Docker layer caching. -->
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
             </plugin>
         </plugins>
@@ -133,7 +138,10 @@
                                             <tag>latest</tag>
                                             <tag>${project.version}</tag>
                                         </tags>
-                                        <cleanup>try</cleanup>
+                                        <cleanup>true</cleanup>
+                                        <buildOptions>
+                                            <forceRm>true</forceRm>
+                                        </buildOptions>
                                     </build>
                                 </image>
                             </images>
@@ -143,6 +151,7 @@
                                 <id>build-image</id>
                                 <phase>package</phase>
                                 <goals>
+                                    <goal>remove</goal>
                                     <goal>build</goal>
                                 </goals>
                             </execution>
