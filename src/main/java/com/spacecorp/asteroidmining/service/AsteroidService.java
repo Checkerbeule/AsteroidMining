@@ -44,7 +44,7 @@ public class AsteroidService {
         return asteroidRepo.findAll();
     }
 
-    public Asteroid getAsteroidById(String id) {
+    public Asteroid getAsteroidById(Long id) {
         return asteroidRepo.findById(id)
                 .orElseThrow(() -> new AsteroidNotFoundException("Asteroid with ID " + id + " not found!"));
     }
@@ -72,7 +72,7 @@ public class AsteroidService {
         return asteroid.resources().entrySet().stream()
                 .mapToInt(entry -> {
                     int pricePerUnit = marketRepo.getPriceFor(entry.getKey());
-                    return pricePerUnit * entry.getValue();
+                    return pricePerUnit * entry.getValue().amount();
                 })
                 .sum();
     }

@@ -1,5 +1,10 @@
 package com.spacecorp.asteroidmining.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.util.Map;
 
 /**
@@ -17,11 +22,20 @@ import java.util.Map;
  * @param resources            A map containing available resource types and their respective quantities.
  * @param distanceInLightYears The spatial distance from the central station, used for fuel and time calculations.
  */
-public record Asteroid (
-        String id,
+@Table("asteroids")
+public record Asteroid(
+        @Id
+        Long id,
         String name,
         RiskProfile riskProfile,
-        Map<ResourceType, Integer> resources,
+        @MappedCollection(idColumn = "asteroid_id", keyColumn = "resource_type")
+        Map<ResourceType, ResourceAmount> resources,
+        @Column("distance")
         double distanceInLightYears
-        ) {
+) {
+    @Table("asteroid_resource")
+    public record ResourceAmount(
+            Integer amount
+    ) {
+    }
 }

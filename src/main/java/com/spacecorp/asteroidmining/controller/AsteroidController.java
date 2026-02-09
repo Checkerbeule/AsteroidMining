@@ -44,7 +44,7 @@ public class AsteroidController {
     }
 
     @GetMapping("/{id}")
-    public Asteroid getAsteroidById(@PathVariable String id) {
+    public Asteroid getAsteroidById(@PathVariable Long id) {
         return asteroidService.getAsteroidById(id);
     }
 
