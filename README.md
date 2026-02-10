@@ -37,8 +37,8 @@ While this is a demo project, it follows production-ready standards for data pro
 
 ### 🐳 Infrastructure & Persistence
 To keep the project flexible, it supports two persistence modes:
- - In-Memory Mode: Default mode for rapid development and testing without external dependencies.
- - PostgreSQL Mode: Uses a Dockerized PostgreSQL database for persistent storage and realistic environment simulation.
+ - **In-Memory** Mode: Default mode for rapid development and testing without external dependencies.
+ - **PostgreSQL** Mode: Uses a Dockerized PostgreSQL database for persistent storage.
 
 ### 🚀 Getting Started
 You can run the project either locally for development or fully containerized.
@@ -47,7 +47,7 @@ Prerequisites:
  - **Java 21** or higher
  - **Maven**
  - **Docker or Docker Desktop** (if you like to use PostgreSQL or run the API with docker)
- - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair.
+ - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair or disable SSL.
  - **Environment Variables**: Create a .env file in the root directory to manage your passwords. See .env.example for further instructions.
 
 After startup your can test the API locally at https://localhost/swagger-ui/index.html
@@ -55,8 +55,8 @@ After startup your can test the API locally at https://localhost/swagger-ui/inde
 #### Option 1: Quick Start (No Database)
 Run the app without any external dependencies straight from your IDE. No docker required.
 
-    Run the App in your IDE: Use the IntelliJ SpringBootNoDbRunConfig
-    The system will automatically inject In-Memory Repositories.
+1. Run the App in your IDE: Use the IntelliJ SpringBootNoDbRunConfig 
+2. The system will automatically inject In-Memory Repositories.
 
 #### Option 2: Full Docker Setup (Database + API)
 When you have docker installed and would like to see the project in a "production-like" environment you can run these commands:
@@ -70,8 +70,8 @@ When you have docker installed and would like to see the project in a "productio
 
 Best for active coding with real DB connection. Run the database in Docker and the app in your IDE:
 
-    Start the database: docker compose up -d db
-    Run the App in your IDE: Use the IntelliJ SpringBootPostgresRunConfig.
+1. Start the database: docker compose up -d db
+2. Run the app in your IDE: Use the IntelliJ SpringBootPostgresRunConfig.
 
 ### 🤝 Join the Discussion!
 
