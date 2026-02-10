@@ -1,5 +1,4 @@
 # 🚀 AsteroidMining API – A Clean Code Showcase
-
 Welcome to the Space Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
 It is specifically designed to showcase how to apply **SOLID Principles** and **Clean Code** strategies in a real-world-inspired scenario.
 
@@ -8,12 +7,10 @@ It is specifically designed to showcase how to apply **SOLID Principles** and **
 > This is a **work-in-progress** educational project. It is intentionally not "feature-complete" as it serves as a continuous **learning playground**.
 
 ### 🎯 Purpose of this Project
-
 This repository is a pattern example for **Junior Developers** and a portfolio piece for **Recruiters**.
 Instead of over-engineering, it follows the **KISS** (Keep It Simple, Stupid/Staightforward) principle while maintaining high architectural standards.
 
 ### 🛠 Applied Clean Code & SOLID Principles
-
 Throughout the codebase, you will find extensive Javadoc explaining why certain patterns were chosen:
 
 #### S.O.L.I.D. Implementation:
@@ -37,6 +34,44 @@ The technical layers are structured as follows:
 While this is a demo project, it follows production-ready standards for data protection and configuration:
  - SSL/TLS Encryption: The REST API is secured via HTTPS to demonstrate secure communication.
  - Secret Management: Sensitive data like Keystore passwords and keypair are never hardcoded. The project uses Environment Variables to show professional configuration handling.
+
+### 🐳 Infrastructure & Persistence
+To keep the project flexible, it supports two persistence modes:
+ - In-Memory Mode: Default mode for rapid development and testing without external dependencies.
+ - PostgreSQL Mode: Uses a Dockerized PostgreSQL database for persistent storage and realistic environment simulation.
+
+### 🚀 Getting Started
+You can run the project either locally for development or fully containerized.
+There are a lot of inline comments explaining what to do and how to get the app running.</br>
+Prerequisites:
+ - **Java 21** or higher
+ - **Maven**
+ - **Docker or Docker Desktop** (if you like to use PostgreSQL or run the API with docker)
+ - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair.
+ - **Environment Variables**: Create a .env file in the root directory to manage your passwords. See .env.example for further instructions.
+
+After startup your can test the API locally at https://localhost/swagger-ui/index.html
+
+#### Option 1: Quick Start (No Database)
+Run the app without any external dependencies straight from your IDE. No docker required.
+
+    Run the App in your IDE: Use the IntelliJ SpringBootNoDbRunConfig
+    The system will automatically inject In-Memory Repositories.
+
+#### Option 2: Full Docker Setup (Database + API)
+When you have docker installed and would like to see the project in a "production-like" environment you can run these commands:
+
+    # Build the JAR and the Docker image using the docker profile
+    mvn clean package -DskipTests -Pdocker
+    # Start the environment
+    docker compose up -d
+
+#### Option 3: Hybrid Development (Docker DB + IDE)
+
+Best for active coding with real DB connection. Run the database in Docker and the app in your IDE:
+
+    Start the database: docker compose up -d db
+    Run the App in your IDE: Use the IntelliJ SpringBootPostgresRunConfig.
 
 ### 🤝 Join the Discussion!
 

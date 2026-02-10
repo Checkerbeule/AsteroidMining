@@ -10,3 +10,10 @@ spring:
       org.springframework.jdbc.core.JdbcTemplate: DEBUG
       # noinspection SpringBootApplicationYaml
       org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Expose health endpoint for Docker health check monitoring.
+        include: health

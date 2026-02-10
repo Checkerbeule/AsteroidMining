@@ -1,0 +1,7 @@
+spring:
+  autoconfigure:
+    # Disable automatic database configuration during tests to avoid
+    # failures when no external database (PostgreSQL) is available.
+    # We use in-memory repositories instead.
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration

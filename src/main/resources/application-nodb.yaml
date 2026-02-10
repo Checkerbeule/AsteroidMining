@@ -1,0 +1,6 @@
+spring:
+  autoconfigure:
+    # Disable automatic database configuration since we don't want to use a real database connection for this profile.
+    # We use in-memory repositories instead.
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
