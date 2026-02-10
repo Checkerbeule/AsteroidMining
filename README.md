@@ -52,7 +52,7 @@ Prerequisites:
 
 After startup your can test the API locally at https://localhost/swagger-ui/index.html
 
-#### Option 1: Quick Start (No Database)
+#### Option 1: Quick Start (In-Memory repository, no docker)
 Run the app without any external dependencies straight from your IDE. No docker required.
 
 1. Run the App in your IDE: Use the IntelliJ SpringBootNoDbRunConfig 
