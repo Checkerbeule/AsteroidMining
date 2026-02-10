@@ -38,7 +38,7 @@ While this is a demo project, it follows production-ready standards for data pro
 ### 🐳 Infrastructure & Persistence
 To keep the project flexible, it supports two persistence modes:
  - **In-Memory** Mode: Default mode for rapid development and testing without external dependencies.
- - **PostgreSQL** Mode: Uses a Dockerized PostgreSQL database for persistent storage.
+ - **PostgreSQL** and **Docker**: Uses a Dockerized PostgreSQL database for persistent storage.
 
 ### 🚀 Getting Started
 You can run the project either locally for development or fully containerized.
