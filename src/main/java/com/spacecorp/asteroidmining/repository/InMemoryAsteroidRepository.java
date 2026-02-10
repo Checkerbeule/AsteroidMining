@@ -4,6 +4,7 @@ import com.spacecorp.asteroidmining.domain.Asteroid;
 import com.spacecorp.asteroidmining.domain.ResourceType;
 import com.spacecorp.asteroidmining.domain.RiskProfile;
 import com.spacecorp.asteroidmining.service.AsteroidService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -23,8 +24,14 @@ import java.util.*;
  * swapped with a Database-backed repository at any time without breaking the
  * {@link AsteroidService}.</li>
  * </ul>
+ * <p>
+ * Note: We use {@link Profile} to activate this "mock" implementation only when the
+ * 'postgres' profile is <b>not</b> active, providing a fallback for local testing
+ * or environments without a running database.
+ * </p>
  */
 @Repository
+@Profile("!postgres")
 public class InMemoryAsteroidRepository implements AsteroidRepository {
 
     private final List<Asteroid> asteroids = new ArrayList<>();
@@ -34,20 +41,20 @@ public class InMemoryAsteroidRepository implements AsteroidRepository {
      */
     public InMemoryAsteroidRepository() {
         asteroids.add(new Asteroid(
-                "1", "Ceres-Alpha", RiskProfile.SAFE,
-                Map.of(ResourceType.IRON, 500, ResourceType.GOLD, 10), 2.5
+                1L, "Ceres-Alpha", RiskProfile.SAFE,
+                Map.of(ResourceType.IRON, new Asteroid.ResourceAmount(500), ResourceType.GOLD, new Asteroid.ResourceAmount(10)), 2.5
         ));
         asteroids.add(new Asteroid(
-                "2", "X-99-Eris", RiskProfile.CAUTION,
-                Map.of(ResourceType.KRYPTONITE, 5, ResourceType.PLATINUM, 5), 15.1
+                2L, "X-99-Eris", RiskProfile.CAUTION,
+                Map.of(ResourceType.KRYPTONITE, new Asteroid.ResourceAmount(5), ResourceType.PLATINUM, new Asteroid.ResourceAmount(5)), 15.1
         ));
         asteroids.add(new Asteroid(
-                "3", "Alpha-Lumina-V2", RiskProfile.VOLATILE,
-                Map.of(ResourceType.IRON, 500, ResourceType.PLATINUM, 1, ResourceType.GOLD, 2), 5.7
+                3L, "Alpha-Lumina-V2", RiskProfile.VOLATILE,
+                Map.of(ResourceType.IRON, new Asteroid.ResourceAmount(500), ResourceType.PLATINUM, new Asteroid.ResourceAmount(1), ResourceType.GOLD, new Asteroid.ResourceAmount(2)), 5.7
         ));
         asteroids.add(new Asteroid(
-                "4", "Aris-Centurion", RiskProfile.LETHAL,
-                Map.of(ResourceType.KRYPTONITE, 1500), 25.3
+                4L, "Aris-Centurion", RiskProfile.LETHAL,
+                Map.of(ResourceType.KRYPTONITE, new Asteroid.ResourceAmount(1500)), 25.3
         ));
     }
 
@@ -57,7 +64,7 @@ public class InMemoryAsteroidRepository implements AsteroidRepository {
     }
 
     @Override
-    public Optional<Asteroid> findById(String id) {
+    public Optional<Asteroid> findById(Long id) {
         return asteroids.stream()
                 .filter(asteroid -> Objects.equals(asteroid.id(), id))
                 .findFirst();

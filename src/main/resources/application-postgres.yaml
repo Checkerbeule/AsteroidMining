@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://127.0.0.1:5432/asteroid_db"
+    username: "asmuser"
+    password: "${DB_USER_PASSWORD}"
+
+  logging:
+    level:
+      # noinspection SpringBootApplicationYaml
+      org.springframework.jdbc.core.JdbcTemplate: DEBUG
+      # noinspection SpringBootApplicationYaml
+      org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Expose health endpoint for Docker health check monitoring.
+        include: health

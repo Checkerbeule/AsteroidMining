@@ -1,0 +1,44 @@
+name: asteroid-mining
+services:
+  service:
+    image: asteroid-mining-api:latest
+    container_name: asteroid-mining-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      SERVER_SSL_KEY_STORE_PASSWORD: ${SERVER_SSL_KEY_STORE_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/asteroid_db
+      SPRING_DATASOURCE_PASSWORD: ${DB_USER_PASSWORD}
+    ports:
+      - "443:8443"
+    healthcheck:
+      test: [ "CMD", "curl", "-fk", "https://127.0.0.1:8443/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  db:
+    image: postgres:18.1-alpine
+    container_name: asteroid-mining-db
+    environment:
+      POSTGRES_USER: asmuser
+      POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+      POSTGRES_DB: asteroid_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./postgres/init-scripts:/docker-entrypoint-initdb.d
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    healthcheck: # Prüft, ob die DB Befehle annimmt
+      test: [ "CMD-SHELL", "pg_isready -U asmuser -d asteroid_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:

@@ -34,7 +34,7 @@ public interface AsteroidRepository {
      * @param id unique identifier.
      * @return an Optional containing the result.
      */
-    Optional<Asteroid> findById(String id);
+    Optional<Asteroid> findById(Long id);
 
     /**
      * @param name exact name of the asteroid.
