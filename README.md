@@ -71,7 +71,6 @@ Best for active coding with real DB connection. Run the database in Docker and t
 1. Start the database: docker compose up -d db
 2. Run the app in your IDE: Use the IntelliJ SpringBootPostgresRunConfig.
 
-<br>
 After startup your can test the API locally at https://localhost/swagger-ui/index.html
 
 ### 🤝 Join the Discussion!
