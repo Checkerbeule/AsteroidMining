@@ -50,8 +50,6 @@ Prerequisites:
  - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair or disable SSL.
  - **Environment Variables**: Create a .env file in the root directory to manage your passwords. See .env.example for further instructions.
 
-After startup your can test the API locally at https://localhost/swagger-ui/index.html
-
 #### Option 1: Quick Start (In-Memory repository, no docker)
 Run the app without any external dependencies straight from your IDE. No docker required.
 
@@ -72,6 +70,9 @@ Best for active coding with real DB connection. Run the database in Docker and t
 
 1. Start the database: docker compose up -d db
 2. Run the app in your IDE: Use the IntelliJ SpringBootPostgresRunConfig.
+
+<br>
+After startup your can test the API locally at https://localhost/swagger-ui/index.html
 
 ### 🤝 Join the Discussion!
 
