@@ -6,5 +6,7 @@ spring:
 
   logging:
     level:
+      # noinspection SpringBootApplicationYaml
       org.springframework.jdbc.core.JdbcTemplate: DEBUG
+      # noinspection SpringBootApplicationYaml
       org.springframework.jdbc.core.StatementCreatorUtils: TRACE

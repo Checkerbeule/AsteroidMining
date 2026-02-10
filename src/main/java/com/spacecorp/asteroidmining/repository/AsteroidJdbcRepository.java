@@ -8,7 +8,15 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+/**
+ * Implementation of the {@link AsteroidRepository} to retrieve data from an SQL-Database.
+ * <p>
+ * Note: We use {@link Profile} to ensure this JDBC implementation is only active
+ * when connecting to a PostgreSQL instance.
+ * </p>
+ */
 @Profile("postgres")
+@SuppressWarnings("unused")
 public interface AsteroidJdbcRepository extends CrudRepository<Asteroid, Long>, AsteroidRepository {
 
     @Override

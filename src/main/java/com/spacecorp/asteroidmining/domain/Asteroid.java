@@ -33,6 +33,14 @@ public record Asteroid(
         @Column("distance")
         double distanceInLightYears
 ) {
+    /**
+     * Wrapper for the resource amount to force Spring Data JDBC to use
+     * the 'asteroid_resource' join table.
+     * * Note: Without this wrapper, Spring incorrectly looks for a 'resources'
+     * column in the main 'asteroids' table.
+     *
+     * @param amount The quantity of the specific resource.
+     */
     @Table("asteroid_resource")
     public record ResourceAmount(
             Integer amount

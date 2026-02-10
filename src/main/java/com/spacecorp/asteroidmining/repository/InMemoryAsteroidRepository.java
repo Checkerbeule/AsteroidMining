@@ -24,6 +24,11 @@ import java.util.*;
  * swapped with a Database-backed repository at any time without breaking the
  * {@link AsteroidService}.</li>
  * </ul>
+ * <p>
+ * Note: We use {@link Profile} to activate this "mock" implementation only when the
+ * 'postgres' profile is <b>not</b> active, providing a fallback for local testing
+ * or environments without a running database.
+ * </p>
  */
 @Repository
 @Profile("!postgres")
