@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * In-memory implementation of the {@link AsteroidRepository}.
@@ -34,7 +36,8 @@ import java.util.*;
 @Profile("!postgres")
 public class InMemoryAsteroidRepository implements AsteroidRepository {
 
-    private final List<Asteroid> asteroids = new ArrayList<>();
+    private final List<Asteroid> asteroids = new CopyOnWriteArrayList<>();
+    private final AtomicLong idSequence;
 
     /**
      * Initializes the repository with hardcoded sample data (Bootstrapping).
@@ -56,11 +59,13 @@ public class InMemoryAsteroidRepository implements AsteroidRepository {
                 4L, "Aris-Centurion", RiskProfile.LETHAL,
                 Map.of(ResourceType.KRYPTONITE, new Asteroid.ResourceAmount(1500)), 25.3
         ));
+
+        idSequence = new AtomicLong(asteroids.size());
     }
 
     @Override
     public List<Asteroid> findAll() {
-        return asteroids;
+        return Collections.unmodifiableList(asteroids);
     }
 
     @Override
@@ -89,5 +94,12 @@ public class InMemoryAsteroidRepository implements AsteroidRepository {
         return asteroids.stream()
                 .filter(asteroid -> asteroid.resources().containsKey(resource))
                 .toList();
+    }
+
+    @Override
+    public Asteroid save(Asteroid asteroid) {
+        var withId = asteroid.withId(idSequence.incrementAndGet());
+        asteroids.add(withId);
+        return withId;
     }
 }

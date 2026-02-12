@@ -1,9 +1,11 @@
 package com.spacecorp.asteroidmining.domain;
 
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+import com.spacecorp.asteroidmining.repository.InMemoryAsteroidRepository;
 
 import java.util.Map;
 
@@ -23,6 +25,7 @@ import java.util.Map;
  * @param distanceInLightYears The spatial distance from the central station, used for fuel and time calculations.
  */
 @Table("asteroids")
+@Builder
 public record Asteroid(
         @Id
         Long id,
@@ -33,6 +36,21 @@ public record Asteroid(
         @Column("distance")
         double distanceInLightYears
 ) {
+    /**
+     * Creates a copy of this asteroid with a new ID.
+     * Used primarily by the {@link InMemoryAsteroidRepository} during the persist process.
+     */
+    public Asteroid withId(Long id) {
+        return Asteroid.builder()
+                .id(id)
+                .name(this.name)
+                .riskProfile(this.riskProfile)
+                .distanceInLightYears(this.distanceInLightYears)
+                .resources(this.resources)
+                .riskProfile(this.riskProfile)
+                .build();
+    }
+
     /**
      * Wrapper for the resource amount to force Spring Data JDBC to use
      * the 'asteroid_resource' join table.

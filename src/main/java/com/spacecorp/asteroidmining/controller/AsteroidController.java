@@ -2,7 +2,13 @@ package com.spacecorp.asteroidmining.controller;
 
 import com.spacecorp.asteroidmining.domain.Asteroid;
 import com.spacecorp.asteroidmining.domain.ResourceType;
+import com.spacecorp.asteroidmining.service.AsteroidDiscoveryService;
 import com.spacecorp.asteroidmining.service.AsteroidService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +34,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1/asteroids")
+@Tag(name = "Asteroid Discovery", description = "Endpoints for deep-space exploration and asteroid management")
 public class AsteroidController {
 
     private final AsteroidService asteroidService;
+    private final AsteroidDiscoveryService discoveryService;
 
     // Constructor Dependency Injection
-    // AsteroidService handles business logic.
-    public AsteroidController(AsteroidService asteroidService) {
+    // Services handle business logic
+    public AsteroidController(AsteroidService asteroidService, AsteroidDiscoveryService discoveryService) {
         this.asteroidService = asteroidService;
+        this.discoveryService = discoveryService;
     }
 
     @GetMapping
@@ -66,5 +75,24 @@ public class AsteroidController {
     @GetMapping("/filter/profitable")
     public List<Asteroid> getProfitableAsteroids(@RequestParam int minValue) {
         return asteroidService.getProfitableAsteroids(minValue);
+    }
+
+    /**
+     * Triggers a deep-space scan to discover a new asteroid.
+     * @return 200 if found, 204 if no new asteroid could be found.
+     */
+    @Operation(
+            summary = "Discover a new asteroid",
+            description = "Triggers a probability-based scan. Returns an asteroid or no content based on discovery chance."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Asteroid successfully discovered"),
+            @ApiResponse(responseCode = "204", description = "Scan completed, but no asteroid was found")
+    })
+    @PostMapping("/discover")
+    public ResponseEntity<Asteroid> discoverNewAsteroid() {
+        return discoveryService.discoverNewAsteroid()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 }

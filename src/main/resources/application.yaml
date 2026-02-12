@@ -16,3 +16,12 @@ server:
     key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD}
     key-store-type: PKCS12
     key-alias: asmSslKey
+
+asteroid:
+  generator:
+    # Configures how to generate a new asteroid when the discover endpoint is called.
+    # Valid values are 'local', 'hybrid' and 'llm'.
+    mode: local
+  discovery:
+    # Configures the chance to find a new asteroid.
+    discovery-rate: 0.7

@@ -53,4 +53,6 @@ public interface AsteroidRepository {
      * @return asteroids containing this resource.
      */
     List<Asteroid> findWithResource(ResourceType resource);
+
+    Asteroid save(Asteroid asteroid);
 }
