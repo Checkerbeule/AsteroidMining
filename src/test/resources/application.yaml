@@ -5,3 +5,8 @@ spring:
     # We use in-memory repositories instead.
     exclude:
       - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+
+asteroid:
+  generator:
+    # Use LocalAsteroidGenerator for tests
+    mode: local

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(name="asteroid.generator.mode", havingValue="llm")
 public class AiAsteroidGenerator implements AsteroidGenerator {
     @Override
-    public Asteroid genrate() {
+    public Asteroid generate() {
         return null;
     }
 }

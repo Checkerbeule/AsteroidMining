@@ -7,5 +7,5 @@ public interface AsteroidGenerator {
      * Generates a new {@link Asteroid} with randomized attributes.
      * @return a fully populated, immutable Asteroid object.
      */
-    Asteroid genrate();
+    Asteroid generate();
 }

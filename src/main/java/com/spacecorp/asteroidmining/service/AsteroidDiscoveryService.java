@@ -51,7 +51,7 @@ public class AsteroidDiscoveryService {
             return Optional.empty();
         }
 
-        Asteroid newAsteroid = asteroidGenerator.genrate();
+        Asteroid newAsteroid = asteroidGenerator.generate();
         Asteroid newAsteroidWithId = asteroidRepository.save(newAsteroid);
 
         return Optional.of(newAsteroidWithId);

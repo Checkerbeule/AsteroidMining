@@ -29,7 +29,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @ConditionalOnProperty(name = "asteroid.generator.mode", havingValue = "local")
 public class LocalAsteroidGenerator implements AsteroidGenerator {
     @Override
-    public Asteroid genrate() {
+    public Asteroid generate() {
         var random = ThreadLocalRandom.current();
 
         String name = "Asteroid " + UUID.randomUUID().toString().substring(0, 6);
