@@ -1,30 +1,48 @@
 package com.spacecorp.asteroidmining.generator;
 
 import com.spacecorp.asteroidmining.domain.Asteroid;
-import com.spacecorp.asteroidmining.domain.ResourceType;
-import com.spacecorp.asteroidmining.domain.RiskProfile;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 
+/**
+ * An AI-powered implementation of {@link AsteroidGenerator} that utilizes a Large Language Model (LLM)
+ * to generate creative, thematic asteroid names.
+ * <p>
+ * This generator uses a "Hybrid" approach:
+ * <ul>
+ * <li><b>Creativity:</b> Names are generated via Mistral AI based on randomized themes.</li>
+ * <li><b>Safety:</b> A simple validation logic ensures that even if the AI provides
+ * malformed output, the system falls back to a safe, procedurally generated name.</li>
+ * <li><b>Composition:</b> Further property generation is delegated to a {@link RandomAsteroidFactory}.</li>
+ * </ul>
+ * * Enabled only when {@code asteroid.generator.mode=hybrid} is set in the configuration.
+ */
 @Component
 @ConditionalOnProperty(name = "asteroid.generator.mode", havingValue = "hybrid")
 public class HybridAsteroidGenerator implements AsteroidGenerator {
 
     private final ChatClient chatClient;
-
+    private final RandomAsteroidFactory asteroidFactory;
+    /**
+     * Pattern to ensure names contain only alphanumeric characters, dashes, and spaces.
+     */
+    private static final Pattern VALID_CHARACTERS = Pattern.compile("^[a-zA-Z0-9\\- ]+$");
+    /**
+     * List of creative descriptors act as a thematic seed for the generative process.
+     */
     private static final List<String> THEMES = List.of(
             "ancient", "cybernetic", "gaseous", "crystalline", "volcanic",
             "frozen", "radioactive", "gazy", "rocky", "dusty", "dark",
             "shiny", "volatile", "cloudy", "botanic", "wild", "exotic"
     );
 
-    public HybridAsteroidGenerator(ChatClient.Builder builder) {
+    public HybridAsteroidGenerator(ChatClient.Builder builder, RandomAsteroidFactory asteroidFactory) {
+        // Configuring the AI with a system prompt to define its persona and a frame for the expected output.
         this.chatClient = builder
                 .defaultSystem("""
                         You are a planetary naming expert.
@@ -36,12 +54,17 @@ public class HybridAsteroidGenerator implements AsteroidGenerator {
                         - Avoid repetition.
                         """)
                 .build();
+        this.asteroidFactory = asteroidFactory;
     }
 
+    /**
+     * Generates a new Asteroid by prompting the AI for a name and enriching it with
+     * random procedural generated attributes.
+     * * @return a fully populated {@link Asteroid} instance.
+     */
     @Override
     public Asteroid generate() {
-        var random = ThreadLocalRandom.current();
-
+        // Select a random theme to ensure variety in the AI's output
         String randomTheme = THEMES.get(ThreadLocalRandom.current().nextInt(THEMES.size()));
         String asteroidName = (chatClient.prompt()
                 .user(u -> u.text("Generate one creative asteroid name that sounds scientific, mystic and/or sci-fi " +
@@ -49,37 +72,18 @@ public class HybridAsteroidGenerator implements AsteroidGenerator {
                         .param("theme", randomTheme)
                 ))
                 .call()
-                .content()
-                .replaceAll("[^a-zA-Z0-9\\- ]", "");
+                .content();
 
-
-        double distance = random.nextDouble(100.);
-        RiskProfile[] riskProfiles = RiskProfile.values();
-        RiskProfile risk = riskProfiles[random.nextInt(riskProfiles.length)];
-        var resources = generateRandomResources();
-
-        return Asteroid.builder()
-                .name(asteroidName)
-                .riskProfile(risk)
-                .distanceInLightYears(distance)
-                .resources(resources)
-                .build();
-    }
-
-    /**
-     * Internal helper to simulate a distribution of resources.
-     *
-     * @return a map of {@link ResourceType} and their respective {@link Asteroid.ResourceAmount}.
-     */
-    private Map<ResourceType, Asteroid.ResourceAmount> generateRandomResources() {
-        var random = ThreadLocalRandom.current();
-
-        ResourceType[] resourceTypes = ResourceType.values();
-        Map<ResourceType, Asteroid.ResourceAmount> resources = new HashMap<>();
-        for (var resource : resourceTypes) {
-            if (random.nextBoolean()) break;
-            resources.put(resource, new Asteroid.ResourceAmount(random.nextInt(100_000)));
+        // Basic response validation.
+        // We check for null/blank, excessive length (>25), word count (>3),
+        // and illegal special characters to prevent react on inappropriate asteroid names.
+        if (Objects.isNull(asteroidName) || asteroidName.isBlank()
+                || asteroidName.length() > 25 || asteroidName.split("[\\s\\-]+").length > 3
+                || !VALID_CHARACTERS.matcher(asteroidName).matches()) {
+            // Fallback: Generate a safe name if the AI output is inappropriate.
+            asteroidName = randomTheme + " asteroid " + UUID.randomUUID().toString().substring(0, 6);
         }
-        return resources;
+
+        return asteroidFactory.createWithName(asteroidName);
     }
 }

@@ -2,12 +2,9 @@ package com.spacecorp.asteroidmining.generator;
 
 import com.spacecorp.asteroidmining.domain.Asteroid;
 import com.spacecorp.asteroidmining.domain.ResourceType;
-import com.spacecorp.asteroidmining.domain.RiskProfile;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -28,37 +25,17 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 @ConditionalOnProperty(name = "asteroid.generator.mode", havingValue = "local")
 public class LocalAsteroidGenerator implements AsteroidGenerator {
-    @Override
-    public Asteroid generate() {
-        var random = ThreadLocalRandom.current();
 
-        String name = "Asteroid " + UUID.randomUUID().toString().substring(0, 6);
-        double distance = random.nextDouble(100.);
-        RiskProfile[] riskProfiles = RiskProfile.values();
-        RiskProfile risk = riskProfiles[random.nextInt(riskProfiles.length)];
-        var resources = generateRandomResources();
+    private final RandomAsteroidFactory asteroidFactory;
 
-        return Asteroid.builder()
-                .name(name)
-                .riskProfile(risk)
-                .distanceInLightYears(distance)
-                .resources(resources)
-                .build();
+    public LocalAsteroidGenerator(RandomAsteroidFactory asteroidFactory) {
+        this.asteroidFactory = asteroidFactory;
     }
 
-    /**
-     * Internal helper to simulate a distribution of resources.
-     * @return a map of {@link ResourceType} and their respective {@link Asteroid.ResourceAmount}.
-     */
-    private Map<ResourceType, Asteroid.ResourceAmount> generateRandomResources() {
-        var random = ThreadLocalRandom.current();
+    @Override
+    public Asteroid generate() {
+        String name = "Asteroid " + UUID.randomUUID().toString().substring(0, 6);
 
-        ResourceType[] resourceTypes = ResourceType.values();
-        Map<ResourceType, Asteroid.ResourceAmount> resources = new HashMap<>();
-        for(var resource : resourceTypes) {
-            if(random.nextBoolean()) break;
-            resources.put(resource, new Asteroid.ResourceAmount(random.nextInt(100_000)));
-        }
-        return resources;
+        return asteroidFactory.createWithName(name);
     }
 }
