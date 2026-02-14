@@ -1,5 +1,9 @@
 package com.spacecorp.asteroidmining.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -27,6 +31,7 @@ import java.util.Map;
 @Table("asteroids")
 @Builder
 public record Asteroid(
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         @Id
         Long id,
         String name,
@@ -61,7 +66,12 @@ public record Asteroid(
      */
     @Table("asteroid_resource")
     public record ResourceAmount(
+            @JsonValue
             Integer amount
     ) {
+        @JsonCreator
+        public static ResourceAmount fromInteger(Integer amount) {
+            return new ResourceAmount(amount);
+        }
     }
 }

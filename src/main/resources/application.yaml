@@ -30,7 +30,12 @@ asteroid:
   generator:
     # Configures how to generate a new asteroid when the discover endpoint is called.
     # Valid values are 'local', 'hybrid' and 'llm'.
-    mode: hybrid
+    mode: llm
   discovery:
     # Configures the chance to find a new asteroid.
     discovery-rate: 0.7
+
+logging:
+  level:
+    root: info
+    com.spacecorp.asteroidmining: debug
