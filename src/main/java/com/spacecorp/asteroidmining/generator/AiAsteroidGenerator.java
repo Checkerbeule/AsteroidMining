@@ -1,8 +1,5 @@
 package com.spacecorp.asteroidmining.generator;
 
-
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.spacecorp.asteroidmining.domain.Asteroid;
 import com.spacecorp.asteroidmining.domain.ResourceType;
 import org.slf4j.Logger;
@@ -53,12 +50,12 @@ public class AiAsteroidGenerator implements AsteroidGenerator {
             return chatClient.prompt()
                     .user(u -> u
                             .text("""
-                                Generate one unique asteroid.
-                                Use a random sci-fi theme.
-                                Ensure the resource amounts are realistic.
-                                Valid resource types are: {resourceTypes}
-                                {format}
-                                """)
+                                    Generate one unique asteroid.
+                                    Use a random sci-fi theme.
+                                    Ensure the resource amounts are realistic.
+                                    Valid resource types are: {resourceTypes}
+                                    {format}
+                                    """)
                             .param("resourceTypes", validResources)
                             .param("format", converter.getFormat())
                     )
