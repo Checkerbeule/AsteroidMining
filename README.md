@@ -1,14 +1,27 @@
-# 🚀 AsteroidMining API – A Clean Code Showcase
+# 🚀 AsteroidMining API – A Clean Code Showcase with AI integration
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen?style=for-the-badge&logo=springboot)
+![Spring AI](https://img.shields.io/badge/Spring%20AI-Mistral-red?style=for-the-badge&logo=mistralai&logoColor=red)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18.1-blue?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker&logoColor=white)
+
 Welcome to the Space Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
 It is specifically designed to showcase how to apply **SOLID Principles** and **Clean Code** strategies in a real-world-inspired scenario.
 
-> [!NOTE]
+[!NOTE]
 > **Project Status**<br>
 > This is a **work-in-progress** educational project. It is intentionally not "feature-complete" as it serves as a continuous **learning playground**.
 
 ### 🎯 Purpose of this Project
-This repository is a pattern example for **Junior Developers** and a portfolio piece for **Recruiters**.
+This repository is a pattern example for **Junior Developers**, a portfolio piece for **Recruiters** and a **playground** for new technologies like LLM integration.
 Instead of over-engineering, it follows the **KISS** (Keep It Simple, Stupid/Staightforward) principle while maintaining high architectural standards.
+
+### 🤖 Smart Asteroid Generation (LLM Integration)
+One of the core highlights is the **AI powered** creation of new asteroid instances. The API can generate asteroids either locally or by leveraging a Large Language Model (Mistral AI via Spring AI).</br>
+The following principles were applied to ensure a stable integration:
+- **Dynamic Steering:** Uses randomized themes (e.g. *volcanic, botanic, gazy, radioactive*) to guide the AI's creativity.
+- **Validation & Fallbacks:** Implements a validation layer to handle "hallucinations" or malformed AI responses and provides a fallback strategy.
+- **Strategy Pattern:** Uses `@ConditionalOnProperty` to switch between `Local-`, `Hybrid-` and `FullAI-` generation modes at runtime.
 
 ### 🛠 Applied Clean Code & SOLID Principles
 Throughout the codebase, you will find extensive Javadoc explaining why certain patterns were chosen:
@@ -78,8 +91,5 @@ After startup your can test the API locally at https://localhost/swagger-ui/inde
 Are you a **Junior Developer**? I invite you to explore the Project! I've added detailed explanations of the principles used in this project. If something is unclear, feel free to open an issue or start a discussion.
 
 Are you a **Senior or Recruiter**? I’d love to hear your feedback!
- - Could the DIP be applied more strictly?
- - Is the KISS approach appropriate here?
- - How would you scale the MiningMarketRepository?
 
 Let's learn and grow together. Feel free to Fork, Star, or Contribute!
