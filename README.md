@@ -1,5 +1,11 @@
-# 🚀 AsteroidMining API – A Clean Code Showcase
-Welcome to the Space Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
+# 🚀 AsteroidMining API – A Clean Code Showcase with AI integration
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen?style=for-the-badge&logo=springboot)
+![Spring AI](https://img.shields.io/badge/Spring%20AI-Mistral-red?style=for-the-badge&logo=mistralai&logoColor=red)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18.1-blue?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker&logoColor=white)
+
+Welcome to the Asteroid Mining API! This project serves as a pragmatic demonstration of modern Java development using Spring Boot.
 It is specifically designed to showcase how to apply **SOLID Principles** and **Clean Code** strategies in a real-world-inspired scenario.
 
 > [!NOTE]
@@ -7,8 +13,16 @@ It is specifically designed to showcase how to apply **SOLID Principles** and **
 > This is a **work-in-progress** educational project. It is intentionally not "feature-complete" as it serves as a continuous **learning playground**.
 
 ### 🎯 Purpose of this Project
-This repository is a pattern example for **Junior Developers** and a portfolio piece for **Recruiters**.
+This repository is a pattern example for **Junior Developers**, a portfolio piece for **Recruiters** and a **playground** for new technologies like LLM integration.
 Instead of over-engineering, it follows the **KISS** (Keep It Simple, Stupid/Staightforward) principle while maintaining high architectural standards.
+
+### 🤖 Smart Asteroid Generation (LLM Integration)
+One of the core highlights is the **AI powered** creation of new asteroid instances. The API can generate asteroids either locally or by leveraging a Large Language Model (Mistral AI via Spring AI).</br>
+The following principles were applied to ensure a stable integration:
+- **Dynamic Steering:** Uses randomized themes (e.g. *volcanic, botanic, gazy, radioactive*) to guide the AI's creativity.
+- **Validation & Fallbacks:** Implements a validation layer to handle "hallucinations" or malformed AI responses and provides a fallback strategy.
+- **Strategy Pattern:** Uses `@ConditionalOnProperty` to switch between `Local-`, `Hybrid-` and `FullAI-` generation modes.
+- **Error handling:** Wraps AI-specific failures into domain exceptions to ensure service stability and clear error reporting. 
 
 ### 🛠 Applied Clean Code & SOLID Principles
 Throughout the codebase, you will find extensive Javadoc explaining why certain patterns were chosen:
@@ -16,10 +30,10 @@ Throughout the codebase, you will find extensive Javadoc explaining why certain 
 #### S.O.L.I.D. Implementation:
  - **SRP**: Each layer (Controller, Service, Repository) has a single, clear responsibility.
  - **ISP & DIP**: Repository interfaces decouple business logic from data storage.
- - **LSP**: In-memory implementations can be swapped with real databases without breaking the system.
+ - **LSP**: In-memory implementations can be swapped with external providers (e.g. real databases, LLM integration) without breaking the system.
 #### Additional Clean Code Principles
  - **KISS** Principle: We avoid "Interface-Hell" by using concrete service classes where abstractions don't yet add value.
- - **Immutability**: Using Java Records and Enums to ensure thread safety and data integrity. 
+ - **Immutability**: Using Java Records and Enums to ensure data integrity. 
 
 ### 🏛 Architecture & Design Approach
 The project follows a **3-layer architecture**, focusing on the core domain while applying pragmatic engineering standards.
@@ -36,9 +50,10 @@ While this is a demo project, it follows production-ready standards for data pro
  - Secret Management: Sensitive data like Keystore passwords and keypair are never hardcoded. The project uses Environment Variables to show professional configuration handling.
 
 ### 🐳 Infrastructure & Persistence
-To keep the project flexible, it supports two persistence modes:
+To keep the project flexible, it supports two persistence modes and multiple strategies for asteroid generation:
  - **In-Memory** Mode: Default mode for rapid development and testing without external dependencies.
  - **PostgreSQL** and **Docker**: Uses a Dockerized PostgreSQL database for persistent storage.
+ - **LLM integration**: Uses Mistral AI via Spring AI to generate unique asteroid data. 
 
 ### 🚀 Getting Started
 You can run the project either locally for development or fully containerized.
@@ -47,8 +62,9 @@ Prerequisites:
  - **Java 21** or higher
  - **Maven**
  - **Docker or Docker Desktop** (if you like to use PostgreSQL or run the API with docker)
- - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair or disable SSL.
- - **Environment Variables**: Create a .env file in the root directory to manage your passwords. See .env.example for further instructions.
+ - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in *application.yaml* to generate your own keypair or disable SSL.
+ - **Mistral AI API Key**: You require an API key if for AI integration. But you can also use the application without LLM integration. See *application.yaml* to configure Mistral AI.
+ - **Environment Variables**: Create a *.env* file in the root directory to manage your passwords. See *.env.example* for further instructions.
 
 #### Option 1: Quick Start (In-Memory repository, no docker)
 Run the app without any external dependencies straight from your IDE. No docker required.
@@ -78,8 +94,5 @@ After startup your can test the API locally at https://localhost/swagger-ui/inde
 Are you a **Junior Developer**? I invite you to explore the Project! I've added detailed explanations of the principles used in this project. If something is unclear, feel free to open an issue or start a discussion.
 
 Are you a **Senior or Recruiter**? I’d love to hear your feedback!
- - Could the DIP be applied more strictly?
- - Is the KISS approach appropriate here?
- - How would you scale the MiningMarketRepository?
 
 Let's learn and grow together. Feel free to Fork, Star, or Contribute!

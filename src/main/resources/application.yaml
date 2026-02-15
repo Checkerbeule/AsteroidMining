@@ -1,6 +1,15 @@
 spring:
   application:
     name: asteroid-mining-api
+  ai:
+    mistralai:
+      # To use the AI generating a new asteroid you have to have an API key and place it to your .env file
+      api-key: ${MISTRAL_API_KEY:dummy-key-for-local-generation}
+      chat:
+        options:
+          model: mistral-small-latest
+          temperature: 1.2
+          top-p: 1.0
 
 # For SSL encryption we need to generate a keypair and configure the following application properties.
 server:
@@ -16,3 +25,24 @@ server:
     key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD}
     key-store-type: PKCS12
     key-alias: asmSslKey
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Expose health endpoint for Docker health check monitoring.
+        include: health
+
+asteroid:
+  generator:
+    # Configures how to generate a new asteroid when the discover endpoint is called.
+    # Valid values are 'local', 'hybrid' and 'llm'.
+    mode: local
+  discovery:
+    # Configures the chance to find a new asteroid.
+    discovery-rate: 0.7
+
+logging:
+  level:
+    root: info
+    com.spacecorp.asteroidmining: debug
