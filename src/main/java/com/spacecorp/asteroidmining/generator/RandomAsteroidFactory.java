@@ -44,7 +44,6 @@ public class RandomAsteroidFactory {
 
     /**
      * Internal helper to simulate a distribution of resources.
-     *
      * @return a map of {@link ResourceType} and their respective {@link Asteroid.ResourceAmount}.
      */
     private Map<ResourceType, Asteroid.ResourceAmount> generateRandomResources() {

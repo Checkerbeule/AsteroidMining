@@ -55,11 +55,11 @@ public class AsteroidDiscoveryService {
         }
 
         try {
-        Asteroid newAsteroid = asteroidGenerator.generate();
-        Asteroid newAsteroidWithId = asteroidRepository.save(newAsteroid);
+            Asteroid newAsteroid = asteroidGenerator.generate();
+            Asteroid newAsteroidWithId = asteroidRepository.save(newAsteroid);
 
-        return Optional.of(newAsteroidWithId);}
-        catch (AiGenerationException e) {
+            return Optional.of(newAsteroidWithId);
+        } catch (AiGenerationException e) {
             throw new AsteroidDiscoveryException("Asteroid discovery failed.", e);
         }
     }

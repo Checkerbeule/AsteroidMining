@@ -10,16 +10,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Implementation of the {@link AsteroidGenerator} that operates entirely locally.
- * * <p>This generator uses local random algorithms to simulate asteroid discovery without
- * relying on external APIs or Cloud LLMs. It is designed for offline development,
+ * <p>This generator uses local random algorithms to create new asteroids for discovery simulation
+ * without relying on external APIs or Cloud LLMs. It is designed for offline development,
  * testing, or as a cost-free fallback strategy.</p>
- * * <p>The generation logic includes:</p>
- * <ul>
- * <li><b>Naming:</b> Uses a combination of a prefix and a shortened UUID.</li>
- * <li><b>Environment:</b> Randomly assigns risk profiles and distances using {@link ThreadLocalRandom}.</li>
- * <li><b>Resources:</b> Dynamically generates a resource map based on available {@link ResourceType}s.</li>
- * </ul>
- * * <p>This component is only loaded if the property {@code asteroid.generator.mode}
+ * <p>This component is only loaded if the property {@code asteroid.generator.mode}
  * is set to {@code local}.</p>
  */
 @Component

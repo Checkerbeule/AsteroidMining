@@ -22,6 +22,7 @@ The following principles were applied to ensure a stable integration:
 - **Dynamic Steering:** Uses randomized themes (e.g. *volcanic, botanic, gazy, radioactive*) to guide the AI's creativity.
 - **Validation & Fallbacks:** Implements a validation layer to handle "hallucinations" or malformed AI responses and provides a fallback strategy.
 - **Strategy Pattern:** Uses `@ConditionalOnProperty` to switch between `Local-`, `Hybrid-` and `FullAI-` generation modes at runtime.
+- **Error handling:** Wraps AI-specific failures into domain exceptions to ensure service stability and clear error reporting. 
 
 ### 🛠 Applied Clean Code & SOLID Principles
 Throughout the codebase, you will find extensive Javadoc explaining why certain patterns were chosen:
@@ -61,6 +62,7 @@ Prerequisites:
  - **Maven**
  - **Docker or Docker Desktop** (if you like to use PostgreSQL or run the API with docker)
  - **SSL Certificate**: Since the API is secured via HTTPS, a Keystore (PKCS12) is required. Follow the instructions in application.yaml to generate your own keypair or disable SSL.
+ - **Mistral AI API Key**: You require an API key if for AI integration. But you can also use the application without LLM integration. See *application.yaml* to configure Mistral AI.
  - **Environment Variables**: Create a .env file in the root directory to manage your passwords. See .env.example for further instructions.
 
 #### Option 1: Quick Start (In-Memory repository, no docker)

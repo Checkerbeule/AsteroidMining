@@ -60,7 +60,7 @@ public class HybridAsteroidGenerator implements AsteroidGenerator {
     /**
      * Generates a new Asteroid by prompting the AI for a name and enriching it with
      * random procedural generated attributes.
-     * * @return a fully populated {@link Asteroid} instance.
+     * @return a fully populated {@link Asteroid} instance.
      */
     @Override
     public Asteroid generate() {
