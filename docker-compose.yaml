@@ -11,6 +11,7 @@ services:
       SERVER_SSL_KEY_STORE_PASSWORD: ${SERVER_SSL_KEY_STORE_PASSWORD}
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/asteroid_db
       SPRING_DATASOURCE_PASSWORD: ${DB_USER_PASSWORD}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY}
     ports:
       - "443:8443"
     healthcheck:

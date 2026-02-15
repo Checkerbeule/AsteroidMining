@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * This generator uses a "Hybrid" approach:
  * <ul>
  * <li><b>Creativity:</b> Names are generated via Mistral AI based on randomized themes.</li>
- * <li><b>Safety:</b> A simple validation logic ensures that even if the AI provides
+ * <li><b>Safety & fallback:</b> A simple validation logic ensures that even if the AI provides
  * malformed output, the system falls back to a safe, procedurally generated name.</li>
  * <li><b>Composition:</b> Further property generation is delegated to a {@link RandomAsteroidFactory}.</li>
  * </ul>

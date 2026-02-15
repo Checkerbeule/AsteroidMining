@@ -55,4 +55,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleAsteroidNotFound(AsteroidNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+
+    /**
+     * Handles errors occurring while asteroid discovery. This can happen when AI generation of asteroids fail.
+     * @param ex the caught {@link AsteroidDiscoveryException}.
+     * @return a {@link ResponseEntity} with status 503 and a specific message.
+     */
+    @ExceptionHandler(AsteroidDiscoveryException.class)
+    public ResponseEntity<Object> handleDiscoveryException(AsteroidDiscoveryException ex){
+        return buildResponse(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+    }
 }

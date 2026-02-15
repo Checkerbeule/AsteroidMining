@@ -4,7 +4,7 @@ spring:
   ai:
     mistralai:
       # To use the AI generating a new asteroid you have to have an API key and place it to your .env file
-      api-key: ${MISTRAL_API_KEY}
+      api-key: ${MISTRAL_API_KEY:dummy-key-for-local-generation}
       chat:
         options:
           model: mistral-small-latest
@@ -30,7 +30,7 @@ asteroid:
   generator:
     # Configures how to generate a new asteroid when the discover endpoint is called.
     # Valid values are 'local', 'hybrid' and 'llm'.
-    mode: llm
+    mode: local
   discovery:
     # Configures the chance to find a new asteroid.
     discovery-rate: 0.7

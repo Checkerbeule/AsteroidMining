@@ -1,6 +1,8 @@
 package com.spacecorp.asteroidmining.service;
 
 import com.spacecorp.asteroidmining.domain.Asteroid;
+import com.spacecorp.asteroidmining.exception.AiGenerationException;
+import com.spacecorp.asteroidmining.exception.AsteroidDiscoveryException;
 import com.spacecorp.asteroidmining.generator.AsteroidGenerator;
 import com.spacecorp.asteroidmining.repository.AsteroidRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +46,7 @@ public class AsteroidDiscoveryService {
      *
      * @return an {@link Optional} containing the discovered {@link Asteroid},
      * or an empty Optional if the scan yielded no results.
+     * @throws AsteroidDiscoveryException if discovery fails (e.g. AI generation fails)
      */
     public Optional<Asteroid> discoverNewAsteroid() {
         // We randomly generate a new asteroid to simulate if a new asteroid could be discovered in space.
@@ -51,9 +54,13 @@ public class AsteroidDiscoveryService {
             return Optional.empty();
         }
 
+        try {
         Asteroid newAsteroid = asteroidGenerator.generate();
         Asteroid newAsteroidWithId = asteroidRepository.save(newAsteroid);
 
-        return Optional.of(newAsteroidWithId);
+        return Optional.of(newAsteroidWithId);}
+        catch (AiGenerationException e) {
+            throw new AsteroidDiscoveryException("Asteroid discovery failed.", e);
+        }
     }
 }
