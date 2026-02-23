@@ -1,13 +1,9 @@
 # Docker base image
-FROM eclipse-temurin:21-jre-ubi10-minimal
+FROM eclipse-temurin:21-jre-alpine
 # Set the working directory
 WORKDIR /app
 # Create a non-root user
-RUN microdnf install -y shadow-utils && \
-    groupadd -r appgroup && \
-    useradd -r -g appgroup -u 1001 appuser && \
-    microdnf remove -y shadow-utils && \
-    microdnf clean all
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup -u 1001
 # Copy the jar file to the docker image
 COPY target/*.jar app.jar
 # Let the appuser own the app for execution

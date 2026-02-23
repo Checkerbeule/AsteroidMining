@@ -35,7 +35,7 @@ services:
       - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./postgres/init-scripts:/docker-entrypoint-initdb.d
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
-    healthcheck: # Prüft, ob die DB Befehle annimmt
+    healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U asmuser -d asteroid_db" ]
       interval: 5s
       timeout: 5s
