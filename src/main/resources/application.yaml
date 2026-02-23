@@ -25,6 +25,9 @@ server:
     key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD}
     key-store-type: PKCS12
     key-alias: asmSslKey
+  error:
+    include-stacktrace: never
+    include-exception: false
 
 management:
   endpoints:
