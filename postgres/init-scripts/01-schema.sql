@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS asteroids (
 CREATE TABLE IF NOT EXISTS asteroid_resource (
     asteroid_id INTEGER REFERENCES asteroids(id),
     resource_type VARCHAR(20) NOT NULL,
-    resources INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
     PRIMARY KEY (asteroid_id, resource_type)
 );
